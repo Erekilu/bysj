@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>数据统计</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-tab layui-tab-brief">
+            <ul class="layui-tab-title">
+                <li class="layui-this">周度</li>
+                <li>月度</li>
+                <li>年度</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <div class="layui-row layui-col-space15">
+                        <div class="layui-col-md8">
+                            <div class="layui-col-md12">
+                                <div class="layui-col-md6">
+                                    <!--总收入-->
+                                    <div class="layui-card" style="background-color: #F8F8F8;">
+                                        <div class="layui-card-header">
+                                            总收入
+                                            <span class="layui-badge layui-bg-blue layuiadmin-badge">周</span>
+                                        </div>
+                                        <div class="layui-card-body layuiadmin-card-list"
+                                             style="padding-top: 5px; padding-bottom: 5px">
+                                            <p class="layuiadmin-big-font" style="color: #5FB878;">+<span id="week_in_amount">2.5</span></p>
+                                            <p>
+                                                收入订单数量
+                                                <span id="week_in_count" class="layuiadmin-span-color">3</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!--总支出-->
+                                    <div class="layui-card" style="background-color: #F8F8F8;">
+                                        <div class="layui-card-header">
+                                            总支出
+                                            <span class="layui-badge layui-bg-blue layuiadmin-badge">周</span>
+                                        </div>
+                                        <div class="layui-card-body layuiadmin-card-list"
+                                             style="padding-top: 5px; padding-bottom: 5px">
+                                            <p class="layuiadmin-big-font" style="color: #FF5722;">-<span id="week_out_amount">2.5</span></p>
+                                            <p>
+                                                支出订单数量
+                                                <span id="week_out_count" class="layuiadmin-span-color">25</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md6">
+                                    饼图
+                                </div>
+                            </div>
+                            <div>
+                                收支双曲线
+                            </div>
+                        </div>
+                        <div class="layui-col-md4">
+                            <div class="layui-card">
+                                <div id="today_borrow" class="layui-card-body">
+                                    <div class="layui-card" style="background-color: #F8F8F8;">
+                                        <div class="layui-card-header">
+                                            借给老李1000元
+                                            <span class="layui-badge layui-bg-red layuiadmin-badge">借出</span>
+                                        </div>
+                                        <div class="layui-card-body layuiadmin-card-list" style="padding-top: 5px; padding-bottom: 5px">
+                                            <p class="layuiadmin-big-font" style="color: #1E9FFF;">-1000</p>
+                                            <p>
+                                                2021-04-01
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="layui-card" style="background-color: #F8F8F8;">
+                                        <div class="layui-card-header">
+                                            借给老李1000元
+                                            <span class="layui-badge layui-bg-red layuiadmin-badge">借出</span>
+                                        </div>
+                                        <div class="layui-card-body layuiadmin-card-list" style="padding-top: 5px; padding-bottom: 5px">
+                                            <p class="layuiadmin-big-font" style="color: #1E9FFF;">-1000</p>
+                                            <p>
+                                                2021-04-01
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    22222
+                </div>
+                <div class="layui-tab-item">
+                    33333
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<script src="/layuiadmin/layui/layui.js"></script>
+<script type="text/javascript" src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+<script>
+    layui.config({
+        base: '/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'sample'], function() {
+        let $ = layui.$,
+            element = layui.element;
+
+    });
+</script>
+</body>
+</html>
+

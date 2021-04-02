@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.hbue.bysj.mapper.BorrowMapper">
+	<update id="updateStateById">
+		update borrow
+		set borrow_state = 0
+		where id = #{borrowId}
+	</update>
+
+	<delete id="deleteById">
+		delete
+		from borrow
+		where id = #{borrowId}
+	</delete>
+
+	<select id="selectBorrowList"  resultType="Borrow">
+		select *
+		from borrow
+		where user_id = #{userId}
+		order by borrow_state desc, borrow_time desc
+		limit #{rowStart}, #{pageSize}
+	</select>
+
+	<select id="selectBorrowListCount"  resultType="Integer">
+		select COUNT(1)
+		from borrow
+		where user_id = #{userId}
+		order by borrow_time desc
+	</select>
+
+	<insert id="insertSelective">
+		insert into borrow
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="borrowFlag != null">
+				borrow_flag,
+			</if>
+			<if test="borrowAmount != null">
+				borrow_amount,
+			</if>
+			<if test="borrowState != null">
+				borrow_state,
+			</if>
+			<if test="borrowName != null">
+				borrow_name,
+			</if>
+			<if test="borrowerName != null">
+				borrower_name,
+			</if>
+			<if test="lenderName != null">
+				lender_name,
+			</if>
+			<if test="borrowDescribe != null">
+				borrow_describe,
+			</if>
+			<if test="borrowTime != null">
+				borrow_time,
+			</if>
+			<if test="borrowCreateTime != null">
+				borrow_create_time,
+			</if>
+			<if test="borrowUpdateTime != null">
+				borrow_update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId},
+			</if>
+			<if test="borrowFlag != null">
+				#{borrowFlag},
+			</if>
+			<if test="borrowAmount != null">
+				#{borrowAmount},
+			</if>
+			<if test="borrowState != null">
+				#{borrowState},
+			</if>
+			<if test="borrowName != null">
+				#{borrowName},
+			</if>
+			<if test="borrowerName != null">
+				#{borrowerName},
+			</if>
+			<if test="lenderName != null">
+				#{lenderName},
+			</if>
+			<if test="borrowDescribe != null">
+				#{borrowDescribe},
+			</if>
+			<if test="borrowTime != null">
+				#{borrowTime},
+			</if>
+			<if test="borrowCreateTime != null">
+				#{borrowCreateTime},
+			</if>
+			<if test="borrowUpdateTime != null">
+				#{borrowUpdateTime},
+			</if>
+		</trim>
+	</insert>
+
+	<select id="selectTodayBorrow" resultType="Borrow">
+		select *
+		from borrow
+		where to_days(borrow_time) = to_days(now())
+			AND user_id = #{userId}
+		limit 8
+	</select>
+</mapper>

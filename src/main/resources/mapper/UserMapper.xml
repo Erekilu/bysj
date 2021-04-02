@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.hbue.bysj.mapper.UserMapper">
+	<select id="findUserByUsername" resultType="User">
+		select * from user where username = #{username}
+	</select>
+
+	<select id="findUserById" resultType="User">
+		select * from user where id = #{id}
+	</select>
+
+	<insert id="insertUser">
+		insert into user (user_type, username, password, user_nickname
+		, user_sex, user_src, user_create_time, user_update_time)
+		values (#{userType}, #{username}, #{password}, #{userNickname}
+		, #{userSex}, #{userSrc}, #{userCreateTime}, #{userUpdateTime})
+	</insert>
+
+	<!--条件修改非空属性-->
+	<update id="changeUserById" parameterType="User">
+		update user
+		<set>
+			<if test="userNickname != null">
+				user_nickname = #{userNickname}
+			</if>
+			<if test="userSex != null">
+				,user_sex = #{userSex}
+			</if>
+			<if test="userUpdateTime != null">
+				,user_update_time = #{userUpdateTime}
+			</if>
+			<if test="userSrc != null">
+				,user_src = #{userSrc}
+			</if>
+			<if test="password != null">
+				,password = #{password}
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+</mapper>

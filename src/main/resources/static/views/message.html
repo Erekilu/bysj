@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>流水操作</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-fluid" id="LAY-app-message">
+    <div class="layui-card">
+        <div class="layui-tab layui-tab-brief">
+            <ul class="layui-tab-title">
+                <li class="layui-this">交易记录</li>
+                <li>借贷记录</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <table id="trad_log" lay-filter="trad_log"></table>
+                </div>
+                <div class="layui-tab-item">
+                    <table id="borrow_log" lay-filter="borrow_log"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/layuiadmin/myUtil.js"></script>
+<script src="/layuiadmin/layui/layui.js"></script>
+<!-- 记录操作-->
+<script type="text/html" id="delete_trad">
+    <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delete_trad">删除记录</a>
+</script>
+<script type="text/html" id="borrow_operation">
+    <a class="layui-btn layui-btn-warm layui-btn-sm" lay-event="state_change">已还清</a>
+    <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delete_borrow">删除记录</a>
+</script>
+<script>
+    layui.config({
+        base: '/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'message', 'table'], function() {
+        let {table, $} = layui;
+
+
+        // 监听工具条 - trad
+        table.on('tool(trad_log)', function(obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            let data = obj.data; //获得当前行数据
+            let layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+
+            if (layEvent === 'delete_trad') { // 删除记录
+                layer.confirm('是否要删除该条记录？', {icon: 3, title: '确认操作'}, function(index) {
+                    // 删除当前用户的这条交易记录
+                    $.ajax({
+                        url: '/removeTrad',
+                        method: 'POST',
+                        data: {tradId: data.id},
+                        success: (res) => {
+                            if (res.code === 0) {
+                                layer.msg('删除记录成功', {
+                                    icon: 1,
+                                    time: 1000,
+                                    zIndex: 19891023 // 弹层优先级
+                                }, function() {
+                                    table.reload('trad_log');
+                                });
+                            } else {
+                                layer.msg(res.msg, {
+                                    icon: 2,
+                                    time: 1000,
+                                    zIndex: 19891023 // 弹层优先级
+                                }, function() {
+                                    table.reload('trad_log');
+                                });
+                            }
+                        }
+                    });
+                });
+            }
+        });
+
+        // 监听工具条 - borrow
+        table.on('tool(borrow_log)', function(obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            let data = obj.data; //获得当前行数据
+            let layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+
+            if (layEvent === 'delete_borrow') { // 删除记录
+                layer.confirm('是否要删除该条记录？', {icon: 3, title: '确认操作'}, function(index) {
+                    // 删除当前用户的这条借贷记录
+                    $.ajax({
+                        url: '/removeBorrow',
+                        method: 'POST',
+                        data: {borrowId: data.id},
+                        success: (res) => {
+                            if (res.code === 0) {
+                                layer.msg('删除记录成功', {
+                                    icon: 1,
+                                    time: 1000,
+                                    zIndex: 19891023 // 弹层优先级
+                                }, function() {
+                                    table.reload('borrow_log');
+                                });
+                            } else {
+                                layer.msg(res.msg, {
+                                    icon: 2,
+                                    time: 1000,
+                                    zIndex: 19891023 // 弹层优先级
+                                }, function() {
+                                    table.reload('borrow_log');
+                                });
+                            }
+                        }
+                    });
+                });
+            } else if (layEvent === 'state_change') { // 更改借贷状态
+                if (data.borrowState === '已还清') {
+                    layer.msg('借贷已还清', {
+                        icon: 2,
+                        time: 1000,
+                        zIndex: 19891022 // 弹层优先级
+                    });
+                    return false;
+                }
+
+                layer.confirm('是否要修改此条记录为已还清？', {icon: 3, title: '确认操作'}, function(index) {
+                    // 修改当前用户的住院状态，并解除相应的病床占用
+                    $.ajax({
+                        url: '/changeBorrowState',
+                        method: 'POST',
+                        data: {borrowId: data.id},
+                        success: (res) => {
+                            if (res.code === 0) {
+                                layer.msg('修改状态成功', {
+                                    icon: 1,
+                                    time: 1000,
+                                    zIndex: 19891023 // 弹层优先级
+                                }, function() {
+                                    table.reload('borrow_log');
+                                });
+                            } else {
+                                layer.msg(res.msg, {
+                                    icon: 2,
+                                    time: 1000,
+                                    zIndex: 19891023 // 弹层优先级
+                                }, function() {
+                                    table.reload('borrow_log');
+                                });
+                            }
+                        }
+                    });
+                });
+            }
+        });
+
+        // 渲染trad表格
+        table.render({
+            elem: '#trad_log', // 绑定table
+            id: 'trad_log', // 设置该表格的id
+            url: '/getTrads',
+            limit: 15, // 一页15
+            cellMinWidth: 50, //全局定义常规单元格的最小宽度
+            page: {
+                layout: ['prev', 'page', 'next', 'skip', 'count'] // 分页设置
+            },
+            loading: true, //显示分页时加载条
+            parseData: function(res) {
+                // 做返回的数据操作
+                for (let trad of res.data.recordList) {
+                    if (trad.tradFlag === 0) {
+                        trad.tradFlag = '支出';
+                    } else {
+                        trad.tradFlag = '收入'
+                    }
+                    trad.tradAmount *= 0.001;
+                }
+
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.data.count, //解析数据长度
+                    "data": res.data.recordList //解析数据列表
+                };
+            },
+            cols: [[{
+                field: 'tradFlag',
+                width: 100,
+                title: '交易类型'
+            }, {
+                field: 'tradTime',
+                width: 120,
+                title: '交易时间'
+            }, {
+                field: 'tradName',
+                width: 150,
+                title: '交易简介'
+            }, {
+                field: 'tradTarget',
+                width: 120,
+                title: '交易对象'
+            }, {
+                field: 'tradType',
+                width: 100,
+                title: '物品种类'
+            }, {
+                field: 'tradAmount',
+                width: 100,
+                title: '交易金额'
+            }, {
+                field: 'tradDescribe',
+                title: '交易描述'
+            }, {
+                // 固定右侧工具栏，绑定trad操作
+                // fixed: 'right',
+                title: '删除记录',
+                align: 'center',
+                width: 200,
+                toolbar: '#delete_trad'
+            }]]
+        });
+
+        // 渲染borrow表格
+        table.render({
+            elem: '#borrow_log', // 绑定table
+            id: 'borrow_log', // 设置该表格的id
+            url: '/getBorrows',
+            limit: 15, // 一页15
+            cellMinWidth: 50, //全局定义常规单元格的最小宽度
+            page: {
+                layout: ['prev', 'page', 'next', 'skip', 'count'] // 分页设置
+            },
+            loading: true, //显示分页时加载条
+            parseData: function(res) {
+                // 做返回的数据操作
+                for (let borrow of res.data.recordList) {
+                    if (borrow.borrowFlag === 0) {
+                        borrow.borrowFlag = '借入';
+                    } else {
+                        borrow.borrowFlag = '借出'
+                    }
+
+                    if (borrow.borrowState === 0) {
+                        borrow.borrowState = '已还清';
+                    } else {
+                        borrow.borrowState = '未还清'
+                    }
+                    borrow.borrowAmount *= 0.001;
+                }
+
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.data.count, //解析数据长度
+                    "data": res.data.recordList //解析数据列表
+                };
+            },
+            cols: [[{
+                field: 'borrowFlag',
+                width: 100,
+                title: '借贷类型'
+            }, {
+                field: 'borrowState',
+                width: 100,
+                title: '借贷状态'
+            }, {
+                field: 'borrowName',
+                width: 120,
+                title: '借贷简介'
+            }, {
+                field: 'borrowTime',
+                width: 100,
+                title: '借贷时间'
+            }, {
+                field: 'borrowerName',
+                width: 120,
+                title: '借入者名'
+            }, {
+                field: 'lenderName',
+                width: 120,
+                title: '借出者名'
+            }, {
+                field: 'borrowAmount',
+                width: 100,
+                title: '借贷金额'
+            }, {
+                field: 'borrowDescribe',
+                title: '借贷描述'
+            }, {
+                // 固定右侧工具栏，绑定borrow操作
+                // fixed: 'right',
+                title: '操作',
+                align: 'center',
+                width: 200,
+                toolbar: '#borrow_operation'
+            }]]
+        });
+
+    });
+</script>
+</body>
+</html>

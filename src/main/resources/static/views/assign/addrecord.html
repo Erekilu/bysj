@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>添加记录</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+
+        <div class="layui-col-md6">
+            <!--添加收支表单-->
+            <div class="layui-card">
+                <div class="layui-card-header">添加收支记录</div>
+                <div class="layui-card-body">
+                    <form class="layui-form" action="" lay-filter="component-form-group">
+                        <!--交易类型-->
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">交易类型</label>
+                            <div class="layui-input-inline">
+                                <input type="radio" lay-filter="trad_flag1" id="trad_flag1" name="tradFlag" value="0" title="支出" checked="">
+                                <input type="radio" lay-filter="trad_flag2" id="trad_flag2" name="tradFlag" value="1" title="收入">
+                            </div>
+                        </div>
+                        <!--交易简介-->
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">交易简介</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="trad_name" name="tradName" maxlength="30" lay-verify="required" autocomplete="off" placeholder="请输入交易简介" class="layui-input">
+                            </div>
+                        </div>
+                        <!--物品类型-->
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">物品类型</label>
+                            <div class="layui-input-inline">
+                                <select id="trad_type" name="tradType" lay-verify="required">
+                                </select>
+                            </div>
+                        </div>
+                        <!--交易对象-->
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">交易对象</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="trad_target" name="tradTarget" maxlength="30" lay-verify="required" autocomplete="off" placeholder="请输入交易对象" class="layui-input">
+                            </div>
+                        </div>
+                        <!--交易金额-->
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">交易金额</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="trad_amount" name="tradAmount" maxlength="30" lay-verify="number" autocomplete="off" placeholder="元（最多保留3位小数）" class="layui-input">
+                            </div>
+                        </div>
+                        <!--交易时间-->
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">交易时间</label>
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" id="trad_time" name="tradTime" placeholder="yyyy-MM-dd">
+                            </div>
+                        </div>
+                        <!--交易详情-->
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">交易详情</label>
+                            <div class="layui-input-block">
+                                <textarea id="trad_describe" name="tradDescribe" placeholder="请输入交易详情" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <!--提交重置按钮-->
+                        <div class="layui-form-item layui-layout-admin">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit="" lay-filter="trad_submit">立即提交</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-md6">
+            <!--添加借贷记录-->
+            <div class="layui-card">
+                <div class="layui-card-header">添加收支记录</div>
+                <div class="layui-card-body">
+                    <form class="layui-form" action="" lay-filter="component-form-group">
+                        <!--借贷类型-->
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">借贷类型</label>
+                            <div class="layui-input-inline">
+                                <input type="radio" id="borrow_flag1" name="borrowFlag" value="0" title="借入" checked="">
+                                <input type="radio" id="borrow_flag2" name="borrowFlag" value="1" title="借出">
+                            </div>
+                        </div>
+                        <!--借贷简介-->
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">借贷简介</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="borrow_name" name="borrowName" maxlength="30" lay-verify="required" autocomplete="off" placeholder="请输入借贷简介" class="layui-input">
+                            </div>
+                        </div>
+                        <!--借入者姓名-->
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">借入者姓名</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="borrower_name" name="borrowerName" maxlength="30" lay-verify="required" autocomplete="off" placeholder="请输入借入者姓名" class="layui-input">
+                            </div>
+                        </div>
+                        <!--借出者姓名-->
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">借出者姓名</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="lender_name" name="lenderName" maxlength="30" lay-verify="required" autocomplete="off" placeholder="请输入借出者姓名" class="layui-input">
+                            </div>
+                        </div>
+                        <!--借贷金额-->
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">交易金额</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="borrow_amount" name="borrowAmount" maxlength="30" lay-verify="number" autocomplete="off" placeholder="元（最多保留3位小数）" class="layui-input">
+                            </div>
+                        </div>
+                        <!--借贷时间-->
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">交易时间</label>
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" id="borrow_time" name="borrowTime" placeholder="yyyy-MM-dd">
+                            </div>
+                        </div>
+                        <!--借贷详情-->
+                        <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">交易详情</label>
+                            <div class="layui-input-block">
+                                <textarea id="borrow_describe" name="borrowDescribe" placeholder="请输入借贷详情" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <!--提交重置按钮-->
+                        <div class="layui-form-item layui-layout-admin">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit="" lay-filter="borrow_submit">立即提交</button>
+                                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="/layuiadmin/myUtil.js"></script>
+<script src="/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['table', 'index', 'form', 'element', 'laydate'], function() {
+        let {table, $, form, element, laydate} = layui;
+
+        // 绑定时间选择器
+        laydate.render({
+            elem: '#trad_time' //指定元素
+        });
+        laydate.render({
+            elem: '#borrow_time' //指定元素
+        });
+
+        // 绑定提交事件
+        form.on('submit(trad_submit)', function(data){
+            data.field.tradAmount = Math.floor(data.field.tradAmount * 1000);
+            // 添加请求
+            $.ajax({
+                url: '/addTrad',
+                type: 'POST',
+                data: data.field,
+                success: function(result) {
+                    if (result.code === 0) {
+                        layer.msg('添加成功', {
+                            icon: 1
+                            ,time: 1000
+                        });
+                    } else {
+                        layer.msg(result.msg, {
+                            icon: 5
+                            ,time: 1000
+                        });
+                    }
+                }
+            });
+            return false; // 阻止表单跳转
+        });
+
+        // 绑定提交事件
+        form.on('submit(borrow_submit)', function(data){
+            data.field.borrowAmount = Math.floor(data.field.borrowAmount * 1000);
+            // 添加请求
+            $.ajax({
+                url: '/addBorrow',
+                type: 'POST',
+                data: data.field,
+                success: function(result) {
+                    if (result.code === 0) {
+                        layer.msg('添加成功', {
+                            icon: 1
+                            ,time: 1000
+                        });
+                    } else {
+                        layer.msg(result.msg, {
+                            icon: 5
+                            ,time: 1000
+                        });
+                    }
+                }
+            });
+            return false; // 阻止表单跳转
+        });
+
+        // 页面载入时动态加载不同的科室
+        $(function() {
+            fillItemType(0)
+        });
+
+        // 给单选按钮绑定事件
+        form.on('radio(trad_flag1)', function(data){
+            fillItemType(0);
+        });
+        form.on('radio(trad_flag2)', function(data){
+            fillItemType(1);
+        });
+
+        // 渲染物品类型函数
+        function fillItemType(category)
+        {
+            $.ajax({
+                url: '/item_type',
+                method: 'GET',
+                data: {category: category},
+                success: (data) => {
+                    if (data.code === 0) {
+                        $('#trad_type').html('');
+                        // 渲染下拉框
+                        let innerHtml = '';
+                        for (let itemType of data.data) {
+                            innerHtml += `<option value="${itemType.id}">${itemType.itemTypeName}</option>`;
+                        }
+                        // 将拼接的字符串添加到select后
+                        $('#trad_type').append(innerHtml);
+                        // 刷新表单
+                        form.render();
+                    } else {
+                        // 获取物品种类信息失败
+                        layer.msg('获取物品种类信息失败', {
+                            icon: 2,
+                            time: 1000
+                        });
+                    }
+                }
+            })
+        }
+    });
+</script>
+</body>
+</html>

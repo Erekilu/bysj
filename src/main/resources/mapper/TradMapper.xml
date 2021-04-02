@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.hbue.bysj.mapper.TradMapper">
+	<resultMap id="TradMap" type="com.hbue.bysj.vo.TradVo">
+		<id column="id" property="id"/>
+		<result column="trad_flag" property="tradFlag"/>
+		<result column="trad_amount" property="tradAmount"/>
+		<result column="trad_target" property="tradTarget"/>
+		<result column="trad_name" property="tradName"/>
+		<result column="trad_describe" property="tradDescribe"/>
+		<result column="trad_time" property="tradTime"/>
+		<result column="trad_update_time" property="tradUpdateTime"/>
+		<result column="trad_create_time" property="tradCreateTime"/>
+		<association property="user" column="user_id" javaType="User">
+			<id property="id" column="id"/>
+			<result property="userType" column="user_type"/>
+			<result property="username" column="username"/>
+			<result property="password" column="password"/>
+			<result property="userNickname" column="user_nickname"/>
+			<result property="userSex" column="user_sex"/>
+			<result property="userSrc" column="user_src"/>
+			<result property="userCreateTime" column="user_create_time"/>
+			<result property="userUpdateTime" column="user_update_time"/>
+		</association>
+		<association property="itemType" column="trad_type" javaType="ItemType">
+			<id property="id" column="id"/>
+			<result property="itemTypeBelong" column="item_type_belong"/>
+			<result property="itemTypeCategory" column="item_type_category"/>
+			<result property="itemTypeName" column="item_type_name"/>
+			<result property="itemTypeCreateTime" column="item_type_create_time"/>
+			<result property="itemTypeUpdateTime" column="item_type_update_time"/>
+		</association>
+	</resultMap>
+
+	<select id="selectTodayTradIn" resultType="int">
+		select SUM(trad_amount)
+		from trad
+		where user_id = #{userId} AND trad_flag = 1
+		AND to_days(trad_time) = to_days(now())
+	</select>
+
+	<select id="selectTodayTradOut" resultType="int">
+		select SUM(trad_amount)
+		from trad
+		where user_id = #{userId} AND trad_flag = 0
+		AND to_days(trad_time) = to_days(now())
+	</select>
+
+	<delete id="deleteById">
+		delete
+		from trad
+		where id = #{tradId}
+	</delete>
+
+	<select id="selectTodayTrad" resultMap="TradMap">
+		select *
+		from (`trad` tr INNER JOIN `user` us ON tr.user_id = us.id)
+		INNER JOIN `item_type` it ON tr.trad_type = it.id
+		where to_days(tr.trad_time) = to_days(now())
+			AND tr.user_id = #{userId}
+		limit 8
+	</select>
+
+	<select id="selectTradList"  resultType="Trad">
+		select *
+		from trad
+		where user_id = #{userId}
+		order by trad_time desc
+		limit #{rowStart}, #{pageSize}
+	</select>
+
+	<select id="selectTradListCount"  resultType="Integer">
+		select COUNT(1)
+		from trad
+		where user_id = #{userId}
+		order by trad_time desc
+	</select>
+
+	<insert id="insertSelective">
+		insert into trad
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="tradType != null">
+				trad_type,
+			</if>
+			<if test="tradFlag != null">
+				trad_flag,
+			</if>
+			<if test="tradAmount != null">
+				trad_amount,
+			</if>
+			<if test="tradTarget != null">
+				trad_target,
+			</if>
+			<if test="tradName != null">
+				trad_name,
+			</if>
+			<if test="tradDescribe != null">
+				trad_describe,
+			</if>
+			<if test="tradTime != null">
+				trad_time,
+			</if>
+			<if test="tradCreateTime != null">
+				trad_create_time,
+			</if>
+			<if test="tradUpdateTime != null">
+				trad_update_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id},
+			</if>
+			<if test="userId != null">
+				#{userId},
+			</if>
+			<if test="tradType != null">
+				#{tradType},
+			</if>
+			<if test="tradFlag != null">
+				#{tradFlag},
+			</if>
+			<if test="tradAmount != null">
+				#{tradAmount},
+			</if>
+			<if test="tradTarget != null">
+				#{tradTarget},
+			</if>
+			<if test="tradName != null">
+				#{tradName},
+			</if>
+			<if test="tradDescribe != null">
+				#{tradDescribe},
+			</if>
+			<if test="tradTime != null">
+				#{tradTime},
+			</if>
+			<if test="tradCreateTime != null">
+				#{tradCreateTime},
+			</if>
+			<if test="tradUpdateTime != null">
+				#{tradUpdateTime},
+			</if>
+		</trim>
+	</insert>
+</mapper>
