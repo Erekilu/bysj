@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.hbue.bysj.mapper.StatisticalMapper">
+	<!--获取当前用户的年/月/周内的收入/支出总和/数量和-->
+	<select id="selectTradSum" resultType="Integer">
+		SELECT
+		<if test="returnType == 1">
+			IFNULL(SUM(trad_amount), 0)
+		</if>
+		<if test="returnType == 2">
+			IFNULL(COUNT(trad_amount), 0)
+		</if>
+		FROM trad
+		WHERE
+		<if test="range == 1">
+			YEARWEEK(date_format(trad_time,'%Y-%m-%d'), 1) = YEARWEEK(now(), 1)
+		</if>
+		<if test="range == 2">
+			DATE_FORMAT(trad_time, '%Y%m') = DATE_FORMAT(CURDATE( ) ,'%Y%m')
+		</if>
+		<if test="range == 3">
+			YEAR(trad_time)=YEAR(NOW())
+		</if>
+		AND trad_flag = ${tradFlag} AND user_id = ${userId}
+	</select>
+
+	<!--获取当前用户的年/月/周内的收入/支出对象列表-->
+	<select id="selectTradList" resultMap="com.hbue.bysj.mapper.TradMapper.TradMap">
+		select *
+		from (`trad` tr INNER JOIN `user` us ON tr.user_id = us.id)
+				 INNER JOIN `item_type` it ON tr.trad_type = it.id
+		where
+		<if test="range == 1">
+			YEARWEEK(date_format(tr.trad_time,'%Y-%m-%d'), 1) = YEARWEEK(now(), 1)
+		</if>
+		<if test="range == 2">
+			DATE_FORMAT(tr.trad_time, '%Y%m') = DATE_FORMAT(CURDATE( ) ,'%Y%m')
+		</if>
+		<if test="range == 3">
+			YEAR(tr.trad_time)=YEAR(NOW())
+		</if>
+		AND trad_flag = ${tradFlag} AND tr.user_id = #{userId}
+	</select>
+</mapper>
