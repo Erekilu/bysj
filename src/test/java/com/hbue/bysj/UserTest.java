@@ -4,6 +4,7 @@ import com.hbue.bysj.domain.Borrow;
 import com.hbue.bysj.domain.Trad;
 import com.hbue.bysj.domain.User;
 import com.hbue.bysj.mapper.BorrowMapper;
+import com.hbue.bysj.mapper.StatisticalMapper;
 import com.hbue.bysj.mapper.TradMapper;
 import com.hbue.bysj.mapper.UserMapper;
 import com.hbue.bysj.vo.TradVo;
@@ -26,55 +27,19 @@ import java.util.List;
 public class UserTest
 {
 	@Autowired
-	UserMapper userMapper;
-	@Autowired
-	TradMapper tradMapper;
-	@Autowired
-	BorrowMapper borrowMapper;
+	StatisticalMapper statisticalMapper;
 
 	@Test
-	public void findUserByUsername()
+	void selectTradSum()
 	{
-		User user = userMapper.findUserByUsername("user1");
-		System.out.println(user);
+		int i = statisticalMapper.selectTradSum(2, 1, 0, 1);
+		System.out.println(i);
 	}
 
 	@Test
-	public void insertSelective()
+	void selectTradList()
 	{
-		Trad trad = new Trad();
-//		trad.setTradType(1);
-		trad.setTradFlag(2);
-		trad.setTradAmount(1400);
-//		trad.setTradTarget("xxx");
-		trad.setTradName("ttt");
-//		trad.setTradDescribe("sdfsdf");
-		trad.setTradTime(new Date());
-		trad.setTradCreateTime(new Date());
-		trad.setTradUpdateTime(new Date());
-		tradMapper.insertSelective(trad);
-	}
-
-	@Test
-	public void insertSelective1()
-	{
-		Borrow borrow = new Borrow();
-		borrow.setBorrowerName("lsy");
-		borrow.setLenderName("wyx");
-		borrow.setBorrowFlag(1);
-		borrow.setBorrowState(0);
-		borrow.setBorrowDescribe("xxxxxx");
-		borrow.setBorrowAmount(1231);
-		borrow.setBorrowTime(new Date());
-		borrow.setBorrowCreateTime(new Date());
-		borrow.setBorrowUpdateTime(new Date());
-		borrowMapper.insertSelective(borrow);
-	}
-
-	@Test
-	public void selectTodayTrad()
-	{
-		List<TradVo> tradVos = tradMapper.selectTodayTrad(1);
+		List<TradVo> tradVos = statisticalMapper.selectTradList(2, 1, 1);
 		System.out.println(tradVos.size());
 	}
 }

@@ -14,22 +14,23 @@
 
 <div class="layui-fluid">
     <div class="layui-card">
-        <div class="layui-tab layui-tab-brief">
+        <div class="layui-tab layui-tab-brief" lay-filter="statistical">
             <ul class="layui-tab-title">
                 <li class="layui-this">周度</li>
                 <li>月度</li>
                 <li>年度</li>
             </ul>
             <div class="layui-tab-content">
+                <!--周度-->
                 <div class="layui-tab-item layui-show">
                     <div class="layui-row layui-col-space15">
                         <div class="layui-col-md8">
-                            <div class="layui-col-md12">
+                            <div class="layui-row layui-col-space15">
                                 <div class="layui-col-md6">
                                     <!--总收入-->
                                     <div class="layui-card" style="background-color: #F8F8F8;">
                                         <div class="layui-card-header">
-                                            总收入
+                                            总收入（元/RMB）
                                             <span class="layui-badge layui-bg-blue layuiadmin-badge">周</span>
                                         </div>
                                         <div class="layui-card-body layuiadmin-card-list"
@@ -41,10 +42,12 @@
                                             </p>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="layui-col-md6">
                                     <!--总支出-->
                                     <div class="layui-card" style="background-color: #F8F8F8;">
                                         <div class="layui-card-header">
-                                            总支出
+                                            总支出（元/RMB）
                                             <span class="layui-badge layui-bg-blue layuiadmin-badge">周</span>
                                         </div>
                                         <div class="layui-card-body layuiadmin-card-list"
@@ -57,57 +60,157 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="layui-col-md6">
-                                    饼图
+                                <!--双曲线图-->
+                                <div  class="layui-col-md12">
+                                    <div id="chart2" style="height:400px;"></div>
                                 </div>
                             </div>
-                            <div>
-                                收支双曲线
-                            </div>
+
                         </div>
                         <div class="layui-col-md4">
-                            <div class="layui-card">
-                                <div id="today_borrow" class="layui-card-body">
-                                    <div class="layui-card" style="background-color: #F8F8F8;">
-                                        <div class="layui-card-header">
-                                            借给老李1000元
-                                            <span class="layui-badge layui-bg-red layuiadmin-badge">借出</span>
-                                        </div>
-                                        <div class="layui-card-body layuiadmin-card-list" style="padding-top: 5px; padding-bottom: 5px">
-                                            <p class="layuiadmin-big-font" style="color: #1E9FFF;">-1000</p>
-                                            <p>
-                                                2021-04-01
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="layui-card" style="background-color: #F8F8F8;">
-                                        <div class="layui-card-header">
-                                            借给老李1000元
-                                            <span class="layui-badge layui-bg-red layuiadmin-badge">借出</span>
-                                        </div>
-                                        <div class="layui-card-body layuiadmin-card-list" style="padding-top: 5px; padding-bottom: 5px">
-                                            <p class="layuiadmin-big-font" style="color: #1E9FFF;">-1000</p>
-                                            <p>
-                                                2021-04-01
-                                            </p>
-                                        </div>
-                                    </div>
+                            <!--支出饼图-->
+                            <div class="layui-card"  style="background-color: #F8F8F8;">
+                                <div class="layui-card-body">
+                                    <div id="chart1" style="height:230px;"></div>
+                                </div>
+                            </div>
+                            <!--收入饼图-->
+                            <div class="layui-card"  style="background-color: #F8F8F8;">
+                                <div class="layui-card-body">
+                                    <div id="chart3" style="height:230px;"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!--月度-->
                 <div class="layui-tab-item">
-                    22222
+                    <div class="layui-row layui-col-space15">
+                        <div class="layui-col-md8">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-md6">
+                                    <!--总收入-->
+                                    <div class="layui-card" style="background-color: #F8F8F8;">
+                                        <div class="layui-card-header">
+                                            总收入（元/RMB）
+                                            <span class="layui-badge layui-bg-blue layuiadmin-badge">月</span>
+                                        </div>
+                                        <div class="layui-card-body layuiadmin-card-list"
+                                             style="padding-top: 5px; padding-bottom: 5px">
+                                            <p class="layuiadmin-big-font" style="color: #5FB878;">+<span id="month_in_amount">2.5</span></p>
+                                            <p>
+                                                收入订单数量
+                                                <span id="month_in_count" class="layuiadmin-span-color">3</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md6">
+                                    <!--总支出-->
+                                    <div class="layui-card" style="background-color: #F8F8F8;">
+                                        <div class="layui-card-header">
+                                            总支出（元/RMB）
+                                            <span class="layui-badge layui-bg-blue layuiadmin-badge">月</span>
+                                        </div>
+                                        <div class="layui-card-body layuiadmin-card-list"
+                                             style="padding-top: 5px; padding-bottom: 5px">
+                                            <p class="layuiadmin-big-font" style="color: #FF5722;">-<span id="month_out_amount">2.5</span></p>
+                                            <p>
+                                                支出订单数量
+                                                <span id="month_out_count" class="layuiadmin-span-color">25</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--双曲线图-->
+                                <div  class="layui-col-md12">
+                                    <div id="chart4" style="height:400px;"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="layui-col-md4">
+                            <!--支出饼图-->
+                            <div class="layui-card"  style="background-color: #F8F8F8;">
+                                <div class="layui-card-body">
+                                    <div id="chart5" style="height:230px;"></div>
+                                </div>
+                            </div>
+                            <!--收入饼图-->
+                            <div class="layui-card"  style="background-color: #F8F8F8;">
+                                <div class="layui-card-body">
+                                    <div id="chart6" style="height:230px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <!--年度-->
                 <div class="layui-tab-item">
-                    33333
+                    <div class="layui-row layui-col-space15">
+                        <div class="layui-col-md8">
+                            <div class="layui-row layui-col-space15">
+                                <div class="layui-col-md6">
+                                    <!--总收入-->
+                                    <div class="layui-card" style="background-color: #F8F8F8;">
+                                        <div class="layui-card-header">
+                                            总收入（元/RMB）
+                                            <span class="layui-badge layui-bg-blue layuiadmin-badge">年</span>
+                                        </div>
+                                        <div class="layui-card-body layuiadmin-card-list"
+                                             style="padding-top: 5px; padding-bottom: 5px">
+                                            <p class="layuiadmin-big-font" style="color: #5FB878;">+<span id="year_in_amount">2.5</span></p>
+                                            <p>
+                                                收入订单数量
+                                                <span id="year_in_count" class="layuiadmin-span-color">3</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-col-md6">
+                                    <!--总支出-->
+                                    <div class="layui-card" style="background-color: #F8F8F8;">
+                                        <div class="layui-card-header">
+                                            总支出（元/RMB）
+                                            <span class="layui-badge layui-bg-blue layuiadmin-badge">年</span>
+                                        </div>
+                                        <div class="layui-card-body layuiadmin-card-list"
+                                             style="padding-top: 5px; padding-bottom: 5px">
+                                            <p class="layuiadmin-big-font" style="color: #FF5722;">-<span id="year_out_amount">2.5</span></p>
+                                            <p>
+                                                支出订单数量
+                                                <span id="year_out_count" class="layuiadmin-span-color">25</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--双曲线图-->
+                                <div  class="layui-col-md12">
+                                    <div id="chart7" style="height:400px;"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="layui-col-md4">
+                            <!--支出饼图-->
+                            <div class="layui-card"  style="background-color: #F8F8F8;">
+                                <div class="layui-card-body">
+                                    <div id="chart8" style="height:230px;"></div>
+                                </div>
+                            </div>
+                            <!--收入饼图-->
+                            <div class="layui-card"  style="background-color: #F8F8F8;">
+                                <div class="layui-card-body">
+                                    <div id="chart9" style="height:230px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-</div>
 </div>
 
 <script src="/layuiadmin/layui/layui.js"></script>
@@ -121,6 +224,880 @@
         let $ = layui.$,
             element = layui.element;
 
+
+
+        let statistical;
+        $.ajax({
+            url: '/getMessage',
+            method: 'GET',
+            async: false,
+            success: function(res) {
+                statistical = res.data;
+            }
+        });
+
+        // 渲染收入/支出栏
+        $('#week_in_amount').html(Math.floor(statistical.weekTradInSum * 0.001));
+        $('#week_in_count').html(statistical.weekTradInCount);
+        $('#week_out_amount').html(Math.floor(statistical.weekTradOutSum * 0.001));
+        $('#week_out_count').html(statistical.weekTradOutCount);
+
+        $('#month_in_amount').html(Math.floor(statistical.monthTradInSum * 0.001));
+        $('#month_in_count').html(statistical.monthTradInCount);
+        $('#month_out_amount').html(Math.floor(statistical.monthTradOutSum * 0.001));
+        $('#month_out_count').html(statistical.monthTradOutCount);
+
+        $('#year_in_amount').html(Math.floor(statistical.yearTradInSum * 0.001));
+        $('#year_in_count').html(statistical.yearTradInCount);
+        $('#year_out_amount').html(Math.floor(statistical.yearTradOutSum * 0.001));
+        $('#year_out_count').html(statistical.yearTradOutCount);
+
+        let myChart1 = echarts.init(document.getElementById('chart1'));
+        let myChart2 = echarts.init(document.getElementById('chart2'));
+        let myChart3 = echarts.init(document.getElementById('chart3'));
+        let myChart4 = echarts.init(document.getElementById('chart4'));
+        let myChart5 = echarts.init(document.getElementById('chart5'));
+        let myChart6 = echarts.init(document.getElementById('chart6'));
+        let myChart7 = echarts.init(document.getElementById('chart7'));
+        let myChart8 = echarts.init(document.getElementById('chart8'));
+        let myChart9 = echarts.init(document.getElementById('chart9'));
+
+        let colorList1 =['#afa3f5', '#00d488', '#3feed4', '#3bafff', '#f1bb4c', "rgba(250,250,250,0.5)"];
+
+        // 周-饼图
+        let weekTradOutList = new Array(), wcount = 0;
+        for (let key in statistical.weekTradOutMap) {
+            weekTradOutList[wcount++] = {name: key, value: statistical.weekTradOutMap[key]}
+        }
+        let option1 = {
+            title: {
+                text: '支出种类占比图',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '50%',
+                    center: ['50%', '60%'],
+                    data: weekTradOutList,
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                return colorList1[params.dataIndex]
+                            }
+                        }
+                    },
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        // 周-饼图
+        let weekTradInList = new Array(), wcount1 = 0;
+        for (let key in statistical.weekTradInMap) {
+            weekTradInList[wcount1++] = {name: key, value: statistical.weekTradInMap[key]}
+        }
+        let option3 = {
+            title: {
+                text: '收入种类占比图',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '50%',
+                    center: ['50%', '60%'],
+                    data: weekTradInList,
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                return colorList1[params.dataIndex]
+                            }
+                        }
+                    },
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        
+        // 周-折现图
+        const colorList = ["#9E87FF", '#73DDFF', '#fe9a8b', '#F56948', '#9E87FF'];
+        let option2 = {
+            backgroundColor: '#fff',
+            title: {
+                text: '收支统计曲线',
+                textStyle: {
+                    fontSize: 12,
+                    fontWeight: 400
+                },
+                left: 'center',
+                top: '5%'
+            },
+            legend: {
+                icon: 'circle',
+                top: '5%',
+                right: '5%',
+                itemWidth: 6,
+                itemGap: 20,
+                textStyle: {
+                    color: '#556677'
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    label: {
+                        show: true,
+                        backgroundColor: '#fff',
+                        color: '#556677',
+                        borderColor: 'rgba(0,0,0,0)',
+                        shadowColor: 'rgba(0,0,0,0)',
+                        shadowOffsetY: 0
+                    },
+                    lineStyle: {
+                        width: 0
+                    }
+                },
+                backgroundColor: '#fff',
+                textStyle: {
+                    color: '#5c6c7c'
+                },
+                padding: [10, 10],
+                extraCssText: 'box-shadow: 1px 0 2px 0 rgba(163,163,163,0.5)'
+            },
+            grid: {
+                top: '15%',
+                right: '5%'
+            },
+            xAxis: [{
+                type: 'category',
+                data: statistical.weekTradOutData.xList,
+                axisLine: {
+                    lineStyle: {
+                        color: '#DCE2E8'
+                    }
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    interval: 0,
+                    textStyle: {
+                        color: '#556677'
+                    },
+                    // 默认x轴字体大小
+                    fontSize: 12,
+                    // margin:文字到x轴的距离
+                    margin: 15
+                },
+                axisPointer: {
+                    label: {
+                        // padding: [11, 5, 7],
+                        padding: [0, 0, 10, 0],
+                        // 这里的margin和axisLabel的margin要一致!
+                        margin: 15,
+                        // 移入时的字体大小
+                        fontSize: 12,
+                        backgroundColor: {
+                            type: 'linear',
+                            x: 0,
+                            y: 0,
+                            x2: 0,
+                            y2: 1,
+                            colorStops: [{
+                                offset: 0,
+                                color: '#fff' // 0% 处的颜色
+                            }, {
+                                // offset: 0.9,
+                                offset: 0.86,
+                                /*
+                                 0.86 = （文字 + 文字距下边线的距离）/（文字 + 文字距下边线的距离 + 下边线的宽度）
+
+                                 */
+                                color: '#fff' // 0% 处的颜色
+                            }, {
+                                offset: 0.86,
+                                color: '#33c0cd' // 0% 处的颜色
+                            }, {
+                                offset: 1,
+                                color: '#33c0cd' // 100% 处的颜色
+                            }],
+                            global: false // 缺省为 false
+                        }
+                    }
+                },
+                boundaryGap: false
+            }],
+            yAxis: [{
+                name: '元/RMB',
+                type: 'value',
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#DCE2E8'
+                    }
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: '#556677'
+                    }
+                },
+                splitLine: {
+                    show: false
+                }
+            }],
+            series: [{
+                name: '支出',
+                type: 'line',
+                data: statistical.weekTradOutData.yList,
+                symbolSize: 1,
+                symbol: 'circle',
+                smooth: true,
+                yAxisIndex: 0,
+                showSymbol: false,
+                lineStyle: {
+                    width: 5,
+                    color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
+                        offset: 0,
+                        color: '#9effff'
+                    },
+                        {
+                            offset: 1,
+                            color: '#9E87FF'
+                        }
+                    ]),
+                    shadowColor: 'rgba(158,135,255, 0.3)',
+                    shadowBlur: 10,
+                    shadowOffsetY: 20
+                },
+                itemStyle: {
+                    normal: {
+                        color: colorList[0],
+                        borderColor: colorList[0]
+                    }
+                }
+            }, {
+                name: '收入',
+                type: 'line',
+                data: statistical.weekTradInData.yList,
+                symbolSize: 1,
+                symbol: 'circle',
+                smooth: true,
+                yAxisIndex: 0,
+                showSymbol: false,
+                lineStyle: {
+                    width: 5,
+                    color: new echarts.graphic.LinearGradient(1, 1, 0, 0, [{
+                        offset: 0,
+                        color: '#73DD39'
+                    },
+                        {
+                            offset: 1,
+                            color: '#73DDFF'
+                        }
+                    ]),
+                    shadowColor: 'rgba(115,221,255, 0.3)',
+                    shadowBlur: 10,
+                    shadowOffsetY: 20
+                },
+                itemStyle: {
+                    normal: {
+                        color: colorList[1],
+                        borderColor: colorList[1]
+                    }
+                }
+            }]
+        };
+
+        // 月-折线图
+        let option4 = {
+            backgroundColor: '#fff',
+            title: {
+                text: '收支统计曲线',
+                textStyle: {
+                    fontSize: 12,
+                    fontWeight: 400
+                },
+                left: 'center',
+                top: '5%'
+            },
+            legend: {
+                icon: 'circle',
+                top: '5%',
+                right: '5%',
+                itemWidth: 6,
+                itemGap: 20,
+                textStyle: {
+                    color: '#556677'
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    label: {
+                        show: true,
+                        backgroundColor: '#fff',
+                        color: '#556677',
+                        borderColor: 'rgba(0,0,0,0)',
+                        shadowColor: 'rgba(0,0,0,0)',
+                        shadowOffsetY: 0
+                    },
+                    lineStyle: {
+                        width: 0
+                    }
+                },
+                backgroundColor: '#fff',
+                textStyle: {
+                    color: '#5c6c7c'
+                },
+                padding: [10, 10],
+                extraCssText: 'box-shadow: 1px 0 2px 0 rgba(163,163,163,0.5)'
+            },
+            grid: {
+                top: '15%',
+                right: '5%'
+            },
+            xAxis: [{
+                type: 'category',
+                data: statistical.monthTradOutData.xList,
+                axisLine: {
+                    lineStyle: {
+                        color: '#DCE2E8'
+                    }
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    interval: 0,
+                    textStyle: {
+                        color: '#556677'
+                    },
+                    // 默认x轴字体大小
+                    fontSize: 12,
+                    // margin:文字到x轴的距离
+                    margin: 15
+                },
+                axisPointer: {
+                    label: {
+                        // padding: [11, 5, 7],
+                        padding: [0, 0, 10, 0],
+                        // 这里的margin和axisLabel的margin要一致!
+                        margin: 15,
+                        // 移入时的字体大小
+                        fontSize: 12,
+                        backgroundColor: {
+                            type: 'linear',
+                            x: 0,
+                            y: 0,
+                            x2: 0,
+                            y2: 1,
+                            colorStops: [{
+                                offset: 0,
+                                color: '#fff' // 0% 处的颜色
+                            }, {
+                                // offset: 0.9,
+                                offset: 0.86,
+                                /*
+                                 0.86 = （文字 + 文字距下边线的距离）/（文字 + 文字距下边线的距离 + 下边线的宽度）
+
+                                 */
+                                color: '#fff' // 0% 处的颜色
+                            }, {
+                                offset: 0.86,
+                                color: '#33c0cd' // 0% 处的颜色
+                            }, {
+                                offset: 1,
+                                color: '#33c0cd' // 100% 处的颜色
+                            }],
+                            global: false // 缺省为 false
+                        }
+                    }
+                },
+                boundaryGap: false
+            }],
+            yAxis: [{
+                name: '元/RMB',
+                type: 'value',
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#DCE2E8'
+                    }
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: '#556677'
+                    }
+                },
+                splitLine: {
+                    show: false
+                }
+            }],
+            series: [{
+                name: '支出',
+                type: 'line',
+                data: statistical.monthTradOutData.yList,
+                symbolSize: 1,
+                symbol: 'circle',
+                smooth: true,
+                yAxisIndex: 0,
+                showSymbol: false,
+                lineStyle: {
+                    width: 5,
+                    color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
+                        offset: 0,
+                        color: '#9effff'
+                    },
+                        {
+                            offset: 1,
+                            color: '#9E87FF'
+                        }
+                    ]),
+                    shadowColor: 'rgba(158,135,255, 0.3)',
+                    shadowBlur: 10,
+                    shadowOffsetY: 20
+                },
+                itemStyle: {
+                    normal: {
+                        color: colorList[0],
+                        borderColor: colorList[0]
+                    }
+                }
+            }, {
+                name: '收入',
+                type: 'line',
+                data: statistical.monthTradInData.yList,
+                symbolSize: 1,
+                symbol: 'circle',
+                smooth: true,
+                yAxisIndex: 0,
+                showSymbol: false,
+                lineStyle: {
+                    width: 5,
+                    color: new echarts.graphic.LinearGradient(1, 1, 0, 0, [{
+                        offset: 0,
+                        color: '#73DD39'
+                    },
+                        {
+                            offset: 1,
+                            color: '#73DDFF'
+                        }
+                    ]),
+                    shadowColor: 'rgba(115,221,255, 0.3)',
+                    shadowBlur: 10,
+                    shadowOffsetY: 20
+                },
+                itemStyle: {
+                    normal: {
+                        color: colorList[1],
+                        borderColor: colorList[1]
+                    }
+                }
+            }]
+        };
+
+        // 月-饼图
+        let monthTradOutList = new Array(), wcount2 = 0;
+        for (let key in statistical.monthTradOutMap) {
+            monthTradOutList[wcount2++] = {name: key, value: statistical.monthTradOutMap[key]}
+        }
+        let option5 = {
+            title: {
+                text: '支出种类占比图',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '50%',
+                    center: ['50%', '60%'],
+                    data: monthTradOutList,
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                return colorList1[params.dataIndex]
+                            }
+                        }
+                    },
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        // 月-饼图
+        let monthTradInList = new Array(), wcount3 = 0;
+        for (let key in statistical.monthTradInMap) {
+            monthTradInList[wcount3++] = {name: key, value: statistical.monthTradInMap[key]}
+        }
+        let option6 = {
+            title: {
+                text: '收入种类占比图',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '50%',
+                    center: ['50%', '60%'],
+                    data: monthTradInList,
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                return colorList1[params.dataIndex]
+                            }
+                        }
+                    },
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+
+        // 年-折线图
+        let option7 = {
+            backgroundColor: '#fff',
+            title: {
+                text: '收支统计曲线',
+                textStyle: {
+                    fontSize: 12,
+                    fontWeight: 400
+                },
+                left: 'center',
+                top: '5%'
+            },
+            legend: {
+                icon: 'circle',
+                top: '5%',
+                right: '5%',
+                itemWidth: 6,
+                itemGap: 20,
+                textStyle: {
+                    color: '#556677'
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    label: {
+                        show: true,
+                        backgroundColor: '#fff',
+                        color: '#556677',
+                        borderColor: 'rgba(0,0,0,0)',
+                        shadowColor: 'rgba(0,0,0,0)',
+                        shadowOffsetY: 0
+                    },
+                    lineStyle: {
+                        width: 0
+                    }
+                },
+                backgroundColor: '#fff',
+                textStyle: {
+                    color: '#5c6c7c'
+                },
+                padding: [10, 10],
+                extraCssText: 'box-shadow: 1px 0 2px 0 rgba(163,163,163,0.5)'
+            },
+            grid: {
+                top: '15%',
+                right: '5%'
+            },
+            xAxis: [{
+                type: 'category',
+                data: statistical.yearTradOutData.xList,
+                axisLine: {
+                    lineStyle: {
+                        color: '#DCE2E8'
+                    }
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    interval: 0,
+                    textStyle: {
+                        color: '#556677'
+                    },
+                    // 默认x轴字体大小
+                    fontSize: 12,
+                    // margin:文字到x轴的距离
+                    margin: 15
+                },
+                axisPointer: {
+                    label: {
+                        // padding: [11, 5, 7],
+                        padding: [0, 0, 10, 0],
+                        // 这里的margin和axisLabel的margin要一致!
+                        margin: 15,
+                        // 移入时的字体大小
+                        fontSize: 12,
+                        backgroundColor: {
+                            type: 'linear',
+                            x: 0,
+                            y: 0,
+                            x2: 0,
+                            y2: 1,
+                            colorStops: [{
+                                offset: 0,
+                                color: '#fff' // 0% 处的颜色
+                            }, {
+                                // offset: 0.9,
+                                offset: 0.86,
+                                /*
+                                 0.86 = （文字 + 文字距下边线的距离）/（文字 + 文字距下边线的距离 + 下边线的宽度）
+
+                                 */
+                                color: '#fff' // 0% 处的颜色
+                            }, {
+                                offset: 0.86,
+                                color: '#33c0cd' // 0% 处的颜色
+                            }, {
+                                offset: 1,
+                                color: '#33c0cd' // 100% 处的颜色
+                            }],
+                            global: false // 缺省为 false
+                        }
+                    }
+                },
+                boundaryGap: false
+            }],
+            yAxis: [{
+                name: '元/RMB',
+                type: 'value',
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#DCE2E8'
+                    }
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: '#556677'
+                    }
+                },
+                splitLine: {
+                    show: false
+                }
+            }],
+            series: [{
+                name: '支出',
+                type: 'line',
+                data: statistical.yearTradOutData.yList,
+                symbolSize: 1,
+                symbol: 'circle',
+                smooth: true,
+                yAxisIndex: 0,
+                showSymbol: false,
+                lineStyle: {
+                    width: 5,
+                    color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
+                        offset: 0,
+                        color: '#9effff'
+                    },
+                        {
+                            offset: 1,
+                            color: '#9E87FF'
+                        }
+                    ]),
+                    shadowColor: 'rgba(158,135,255, 0.3)',
+                    shadowBlur: 10,
+                    shadowOffsetY: 20
+                },
+                itemStyle: {
+                    normal: {
+                        color: colorList[0],
+                        borderColor: colorList[0]
+                    }
+                }
+            }, {
+                name: '收入',
+                type: 'line',
+                data: statistical.yearTradInData.yList,
+                symbolSize: 1,
+                symbol: 'circle',
+                smooth: true,
+                yAxisIndex: 0,
+                showSymbol: false,
+                lineStyle: {
+                    width: 5,
+                    color: new echarts.graphic.LinearGradient(1, 1, 0, 0, [{
+                        offset: 0,
+                        color: '#73DD39'
+                    },
+                        {
+                            offset: 1,
+                            color: '#73DDFF'
+                        }
+                    ]),
+                    shadowColor: 'rgba(115,221,255, 0.3)',
+                    shadowBlur: 10,
+                    shadowOffsetY: 20
+                },
+                itemStyle: {
+                    normal: {
+                        color: colorList[1],
+                        borderColor: colorList[1]
+                    }
+                }
+            }]
+        };
+
+        // 年-饼图
+        let yearTradOutList = new Array(), wcount4 = 0;
+        for (let key in statistical.yearTradOutMap) {
+            yearTradOutList[wcount4++] = {name: key, value: statistical.yearTradOutMap[key]}
+        }
+        let option8 = {
+            title: {
+                text: '支出种类占比图',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '50%',
+                    center: ['50%', '60%'],
+                    data: yearTradOutList,
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                return colorList1[params.dataIndex]
+                            }
+                        }
+                    },
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        // 年-饼图
+        let yearTradInList = new Array(), wcount5 = 0;
+        for (let key in statistical.yearTradInMap) {
+            yearTradInList[wcount5++] = {name: key, value: statistical.yearTradInMap[key]}
+        }
+        let option9 = {
+            title: {
+                text: '收入种类占比图',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '50%',
+                    center: ['50%', '60%'],
+                    data: yearTradInList,
+                    itemStyle: {
+                        normal: {
+                            color: function(params) {
+                                return colorList1[params.dataIndex]
+                            }
+                        }
+                    },
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        myChart1.setOption(option1);
+        myChart2.setOption(option2);
+        myChart3.setOption(option3);
+        myChart4.setOption(option4);
+        myChart5.setOption(option5);
+        myChart6.setOption(option6);
+        myChart7.setOption(option7);
+        myChart8.setOption(option8);
+        myChart9.setOption(option9);
+
+        // 设置tab切换时重新渲染
+        element.on('tab(statistical)', function(data){
+            // console.log(data);
+            if (data.index === 1) {
+                //延迟0.3s
+                setTimeout(function () {
+                    //重新加载宽高
+                    myChart4.resize();
+                    myChart5.resize();
+                    myChart6.resize();
+                }, 300);
+            } else if (data.index === 2) {
+                //延迟0.3s
+                setTimeout(function () {
+                    //重新加载宽高
+                    myChart7.resize();
+                    myChart8.resize();
+                    myChart9.resize();
+                }, 300);
+            }
+        });
     });
 </script>
 </body>

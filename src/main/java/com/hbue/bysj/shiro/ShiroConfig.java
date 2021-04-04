@@ -34,31 +34,33 @@ public class ShiroConfig
 		filterMap.put("/views/toLogin.html", "anon");
 
 		// 权限拦截规则
-		filterMap.put("/assignBed", "perms[admin:assign]");
-		filterMap.put("/removeBed", "perms[admin:assign]");
-		filterMap.put("/getPatients", "perms[admin:assign]");
-		filterMap.put("/getWards", "perms[admin:assign]");
-		filterMap.put("/getData2_2", "perms[admin:assign]");  // wnz统计界面权限拦截
-		filterMap.put("/getPatientsByInp", "perms[admin:assign]"); // zyj统计界面权限拦截
+		filterMap.put("/todayTradAmount", "perms[admin:assign]");
+		filterMap.put("/todayTrad", "perms[admin:assign]");
+		filterMap.put("/removeTrad", "perms[admin:assign]");
+		filterMap.put("/addTrad", "perms[admin:assign]");
+		filterMap.put("/getTrads", "perms[admin:assign]");
+		filterMap.put("/todayBorrow", "perms[admin:assign]");
+		filterMap.put("/changeBorrowState", "perms[admin:assign]");
+		filterMap.put("/removeBorrow", "perms[admin:assign]");
+		filterMap.put("/addBorrow", "perms[admin:assign]");
+		filterMap.put("/getBorrows", "perms[admin:assign]");
+		filterMap.put("/getMessage", "perms[admin:assign]");
+		filterMap.put("/item_type", "perms[admin:assign]");
 		filterMap.put("/views/assign/*", "perms[admin:assign]");
 
 		filterMap.put("/addPatient", "perms[admin:record]");
 		filterMap.put("/patientUpload", "perms[admin:record]");
-		filterMap.put("/getData_2", "perms[admin:record]"); // wnz统计界面权限拦截
+		filterMap.put("/getData_2", "perms[admin:record]");
 		filterMap.put("/views/record/*", "perms[admin:record]");
-
 
 		// 认证拦截规则
 		filterMap.put("/views/**", "authc");
-		filterMap.put("/adminChange", "authc");
-		filterMap.put("/adminInfo", "authc");
-		filterMap.put("/adminUpload", "authc");
-		filterMap.put("/adminChangePassword", "authc");
-		filterMap.put("/department", "authc");
-		filterMap.put("/getLog", "authc");
+		filterMap.put("/userChange", "authc");
+		filterMap.put("/userChangePassword", "authc");
+		filterMap.put("/userInfo", "authc");
 
+		// 退出登录接口
 		filterMap.put("/logout", "logout");
-
 
 		// 指定登录页面
 		shiroFilterFactoryBean.setLoginUrl("/views/toLogin.html");
@@ -66,7 +68,6 @@ public class ShiroConfig
 		//		shiroFilterFactoryBean.setUnauthorizedUrl("/error");
 		// 绑定过滤规则
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
-
 
 		return shiroFilterFactoryBean;
 	}
