@@ -33,7 +33,7 @@ public interface TradService
 	 * @param limit 每页数量
 	 * @return
 	 */
-	RecordVo<Trad> getTradList(int page, int limit);
+	RecordVo<TradVo> getTradList(int page, int limit);
 
 	/**
 	 * 根据tradId删除一条记录

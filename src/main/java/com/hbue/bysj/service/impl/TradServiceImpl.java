@@ -69,11 +69,11 @@ public class TradServiceImpl implements TradService
 	 * @return
 	 */
 	@Override
-	public RecordVo<Trad> getTradList(int page, int limit) {
+	public RecordVo<TradVo> getTradList(int page, int limit) {
 		User user = SysUtil.getUser();
 		// 根据页号计算出行号
 		int rowIndex = PageUtil.calculateRowIndex(page, limit);
-		RecordVo<Trad> recordVo = new RecordVo<>();
+		RecordVo<TradVo> recordVo = new RecordVo<>();
 		recordVo.setRecordList(tradMapper.selectTradList(user.getId(), rowIndex, limit));
 		recordVo.setCount(tradMapper.selectTradListCount(user.getId()));
 		return recordVo;

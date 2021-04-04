@@ -179,6 +179,7 @@
                         trad.tradFlag = '收入'
                     }
                     trad.tradAmount = (trad.tradAmount * 0.001).toFixed(3);
+                    trad.tradType = trad.itemType.itemTypeName;
                 }
 
                 return {
@@ -206,7 +207,7 @@
                 title: '交易对象'
             }, {
                 field: 'tradType',
-                width: 100,
+                width: 120,
                 title: '物品种类'
             }, {
                 field: 'tradAmount',

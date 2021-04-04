@@ -18,7 +18,7 @@
 		select *
 		from borrow
 		where user_id = #{userId}
-		order by borrow_state desc, borrow_time desc
+		order by borrow_state desc, borrow_time desc, borrow_update_time desc
 		limit #{rowStart}, #{pageSize}
 	</select>
 
@@ -26,7 +26,6 @@
 		select COUNT(1)
 		from borrow
 		where user_id = #{userId}
-		order by borrow_time desc
 	</select>
 
 	<insert id="insertSelective">

@@ -44,7 +44,7 @@ public interface TradMapper
 	 * @param pageSize 每页数量
 	 * @return
 	 */
-	List<Trad> selectTradList(@Param("userId") int userId,
+	List<TradVo> selectTradList(@Param("userId") int userId,
 							  @Param("rowStart") int rowStart, @Param("pageSize") int pageSize);
 
 	/**

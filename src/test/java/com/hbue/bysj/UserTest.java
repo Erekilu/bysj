@@ -29,17 +29,17 @@ public class UserTest
 	@Autowired
 	StatisticalMapper statisticalMapper;
 
-	@Test
-	void selectTradSum()
-	{
-		int i = statisticalMapper.selectTradSum(2, 1, 0, 1);
-		System.out.println(i);
-	}
-
-	@Test
-	void selectTradList()
-	{
-		List<TradVo> tradVos = statisticalMapper.selectTradList(2, 1, 1);
-		System.out.println(tradVos.size());
-	}
+//	@Test
+//	void selectTradSum()
+//	{
+//		int i = statisticalMapper.selectTradSum(2, 1, 0, 1);
+//		System.out.println(i);
+//	}
+//
+//	@Test
+//	void selectTradList()
+//	{
+//		List<TradVo> tradVos = statisticalMapper.selectTradList(2, 1, 1);
+//		System.out.println(tradVos.size());
+//	}
 }

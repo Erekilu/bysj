@@ -62,11 +62,12 @@
 		limit 8
 	</select>
 
-	<select id="selectTradList"  resultType="Trad">
+	<select id="selectTradList" resultMap="TradMap">
 		select *
-		from trad
-		where user_id = #{userId}
-		order by trad_time desc
+		from (`trad` tr INNER JOIN `user` us ON tr.user_id = us.id)
+				 INNER JOIN `item_type` it ON tr.trad_type = it.id
+		where tr.user_id = #{userId}
+		order by tr.trad_time desc, tr.trad_update_time desc
 		limit #{rowStart}, #{pageSize}
 	</select>
 
@@ -74,7 +75,6 @@
 		select COUNT(1)
 		from trad
 		where user_id = #{userId}
-		order by trad_time desc
 	</select>
 
 	<insert id="insertSelective">
