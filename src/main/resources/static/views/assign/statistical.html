@@ -267,11 +267,11 @@
         // 周-饼图
         let weekTradOutList = new Array(), wcount = 0;
         for (let key in statistical.weekTradOutMap) {
-            weekTradOutList[wcount++] = {name: key, value: statistical.weekTradOutMap[key]}
+            weekTradOutList[wcount++] = {name: key, value: statistical.weekTradOutMap[key].toFixed(0)}
         }
         let option1 = {
             title: {
-                text: '支出种类占比图',
+                text: '支出种类占比图（元/RMB）',
                 left: 'center'
             },
             tooltip: {
@@ -279,7 +279,7 @@
             },
             series: [
                 {
-                    name: '访问来源',
+                    name: '支出种类',
                     type: 'pie',
                     radius: '50%',
                     center: ['50%', '60%'],
@@ -305,11 +305,11 @@
         // 周-饼图
         let weekTradInList = new Array(), wcount1 = 0;
         for (let key in statistical.weekTradInMap) {
-            weekTradInList[wcount1++] = {name: key, value: statistical.weekTradInMap[key]}
+            weekTradInList[wcount1++] = {name: key, value: statistical.weekTradInMap[key].toFixed(0)}
         }
         let option3 = {
             title: {
-                text: '收入种类占比图',
+                text: '收入种类占比图（元/RMB）',
                 left: 'center'
             },
             tooltip: {
@@ -317,7 +317,7 @@
             },
             series: [
                 {
-                    name: '访问来源',
+                    name: '收入种类',
                     type: 'pie',
                     radius: '50%',
                     center: ['50%', '60%'],
@@ -726,11 +726,11 @@
         // 月-饼图
         let monthTradOutList = new Array(), wcount2 = 0;
         for (let key in statistical.monthTradOutMap) {
-            monthTradOutList[wcount2++] = {name: key, value: statistical.monthTradOutMap[key]}
+            monthTradOutList[wcount2++] = {name: key, value: statistical.monthTradOutMap[key].toFixed(0)}
         }
         let option5 = {
             title: {
-                text: '支出种类占比图',
+                text: '支出种类占比图（元/RMB）',
                 left: 'center'
             },
             tooltip: {
@@ -738,7 +738,7 @@
             },
             series: [
                 {
-                    name: '访问来源',
+                    name: '支出种类',
                     type: 'pie',
                     radius: '50%',
                     center: ['50%', '60%'],
@@ -764,11 +764,11 @@
         // 月-饼图
         let monthTradInList = new Array(), wcount3 = 0;
         for (let key in statistical.monthTradInMap) {
-            monthTradInList[wcount3++] = {name: key, value: statistical.monthTradInMap[key]}
+            monthTradInList[wcount3++] = {name: key, value: statistical.monthTradInMap[key].toFixed(0)}
         }
         let option6 = {
             title: {
-                text: '收入种类占比图',
+                text: '收入种类占比图（元/RMB）',
                 left: 'center'
             },
             tooltip: {
@@ -776,7 +776,7 @@
             },
             series: [
                 {
-                    name: '访问来源',
+                    name: '收入种类',
                     type: 'pie',
                     radius: '50%',
                     center: ['50%', '60%'],
@@ -994,11 +994,11 @@
         // 年-饼图
         let yearTradOutList = new Array(), wcount4 = 0;
         for (let key in statistical.yearTradOutMap) {
-            yearTradOutList[wcount4++] = {name: key, value: statistical.yearTradOutMap[key]}
+            yearTradOutList[wcount4++] = {name: key, value: statistical.yearTradOutMap[key].toFixed(0)}
         }
         let option8 = {
             title: {
-                text: '支出种类占比图',
+                text: '支出种类占比图（元/RMB）',
                 left: 'center'
             },
             tooltip: {
@@ -1006,7 +1006,7 @@
             },
             series: [
                 {
-                    name: '访问来源',
+                    name: '支出种类',
                     type: 'pie',
                     radius: '50%',
                     center: ['50%', '60%'],
@@ -1032,11 +1032,11 @@
         // 年-饼图
         let yearTradInList = new Array(), wcount5 = 0;
         for (let key in statistical.yearTradInMap) {
-            yearTradInList[wcount5++] = {name: key, value: statistical.yearTradInMap[key]}
+            yearTradInList[wcount5++] = {name: key, value: statistical.yearTradInMap[key].toFixed(0)}
         }
         let option9 = {
             title: {
-                text: '收入种类占比图',
+                text: '收入种类占比图（元/RMB）',
                 left: 'center'
             },
             tooltip: {
@@ -1044,7 +1044,7 @@
             },
             series: [
                 {
-                    name: '访问来源',
+                    name: '收入种类',
                     type: 'pie',
                     radius: '50%',
                     center: ['50%', '60%'],

@@ -203,11 +203,11 @@ public class StatisticalServiceImpl implements StatisticalService
 	 * @param tradVoList 交易对象列表
 	 * @return
 	 */
-	private Map<String, Integer> getTradTypeMap(List<TradVo> tradVoList) {
-		Map<String, Integer> tradTypeMap = new HashMap<>();
+	private Map<String, Double> getTradTypeMap(List<TradVo> tradVoList) {
+		Map<String, Double> tradTypeMap = new HashMap<>();
 		for (TradVo tradVo : tradVoList) {
 			String name = tradVo.getItemType().getItemTypeName();
-			tradTypeMap.put(name, tradTypeMap.getOrDefault(name, 0) + 1);
+			tradTypeMap.put(name, tradTypeMap.getOrDefault(name, 0.0) + tradVo.getTradAmount() * 0.001);
 		}
 		return tradTypeMap;
 	}
