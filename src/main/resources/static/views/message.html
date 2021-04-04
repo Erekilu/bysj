@@ -178,7 +178,7 @@
                     } else {
                         trad.tradFlag = '收入'
                     }
-                    trad.tradAmount *= 0.001;
+                    trad.tradAmount = (trad.tradAmount * 0.001).toFixed(3);
                 }
 
                 return {
@@ -210,8 +210,8 @@
                 title: '物品种类'
             }, {
                 field: 'tradAmount',
-                width: 120,
-                title: '交易金额（元）'
+                width: 140,
+                title: '交易金额(元)'
             }, {
                 field: 'tradDescribe',
                 title: '交易描述'
@@ -250,7 +250,7 @@
                     } else {
                         borrow.borrowState = '未还清'
                     }
-                    borrow.borrowAmount *= 0.001;
+                    borrow.borrowAmount = (borrow.borrowAmount * 0.001).toFixed(3);
                 }
 
                 return {
@@ -269,13 +269,13 @@
                 width: 100,
                 title: '借贷状态'
             }, {
-                field: 'borrowName',
-                width: 120,
-                title: '借贷简介'
-            }, {
                 field: 'borrowTime',
-                width: 100,
+                width: 120,
                 title: '借贷时间'
+            }, {
+                field: 'borrowName',
+                width: 150,
+                title: '借贷简介'
             }, {
                 field: 'borrowerName',
                 width: 120,
@@ -286,8 +286,8 @@
                 title: '借出者名'
             }, {
                 field: 'borrowAmount',
-                width: 120,
-                title: '借贷金额（元）'
+                width: 140,
+                title: '借贷金额(元)'
             }, {
                 field: 'borrowDescribe',
                 title: '借贷描述'
